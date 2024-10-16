@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Producto</title>
+    <link rel="stylesheet" href="{% static 'css/agregarProductos.css' %}">
+</head>
+<body>
+    <div class="header-container">
+        <a class="btn-regresar" href="{% url 'lista_productos' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M15 4l-8 8 8 8z"></path></svg>
+            Regresar
+        </a>
+    </div>
+
+    <div class="form-container">
+        <h1 class="title">Agregar Nuevo Producto</h1>
+        <form method="POST" class="form-producto">
+            {% csrf_token %}
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+
+            <label for="precio">Precio:</label>
+            <input type="text" id="precio" name="precio" required>
+
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" required></textarea>
+
+            <label for="stock">Stock:</label>
+            <input type="number" id="stock" name="stock" required>
+
+            <label for="foto">Foto URL:</label>
+            <input type="text" id="foto" name="foto" required>
+
+            <button type="submit" class="btn-agregar">Agregar Producto</button>
+        </form>
+    </div>
+</body>
+</html>

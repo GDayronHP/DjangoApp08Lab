@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Producto</title>
+    <link rel="stylesheet" href="{% static 'css/agregarProductos.css' %}">
+</head>
+<body>
+    <div class="header-container">
+        <a class="btn-regresar" href="{% url 'lista_productos' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M15 4l-8 8 8 8z"></path></svg>
+            Regresar
+        </a>
+    </div>
+
+    <div class="form-container">
+        <h1 class="title">Editar Producto</h1>
+        <form method="POST" class="form-producto">
+            {% csrf_token %}
+            <label>Nombre:</label>
+            <input type="text" name="nombre" value="{{ producto.nombre }}" required>
+
+            <label>Precio:</label>
+            <input type="text" name="precio" value="{{ producto.precio }}" required>
+
+            <label>Descripción:</label>
+            <textarea name="descripcion" required>{{ producto.descripcion }}</textarea>
+
+            <label>Stock:</label>
+            <input type="number" name="stock" value="{{ producto.stock }}" required>
+
+            <label>Foto URL:</label>
+            <input type="text" name="foto" value="{{ producto.foto }}" required>
+
+            <button type="submit" class="btn-agregar">Actualizar Producto</button>
+        </form>
+    </div>
+
+</body>
+</html>

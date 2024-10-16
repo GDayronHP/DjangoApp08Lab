@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Productos</title>
+    <link rel="stylesheet" href="{% static 'css/productos.css' %}">
+</head>
+<body>
+    <div class="header-container">
+        <form method="GET" action="" class="header">
+            <div class="search-input-container"> 
+                <input class="search-input" type="text" name="q" placeholder="Buscar producto..." value="{{ request.GET.q }}">
+                <svg class="searchIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="transform: ;msFilter:;"><path d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"></path></svg>
+            </div>
+            <div class="ordenar-container"> 
+                <label for="ordenar_por"></label>
+                <select name="ordenar_por" id="ordenar_por">
+                    <option value="">Seleccionar</option>
+                    <option value="nombre" {% if request.GET.ordenar_por == 'nombre' %}selected{% endif %}>Nombre</option>
+                    <option value="precio" {% if request.GET.ordenar_por == 'precio' %}selected{% endif %}>Precio</option>
+                    <option value="stock" {% if request.GET.ordenar_por == 'stock' %}selected{% endif %}>Stock</option>
+                </select>
+                <button type="submit">Buscar y Ordenar</button>
+            </div>
+        </form>
+    </div>
+    
+    <a class="crear-producto" href="{% url 'crear_producto'%}" >
+        <svg class="plusIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="transform: ;msFilter:;"><path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"></path></svg>
+    Crear producto</a>
+
+    <h1 class="title">Listado de Productos</h1>
+    <div class="productos-container">
+        {% for producto in datos %}
+            <div class="producto-container"> 
+                <div class="options-btns"> 
+                    <a class="editar-btn" href="{% url 'editar_producto' producto.id_producto %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"></path></svg>
+                    </a>
+                    <a id="eliminar" class="eliminar-btn" href="{% url 'eliminar_producto' producto.id_producto %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="transform: ;msFilter:;"><path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm4 12H8v-9h2v9zm6 0h-2v-9h2v9zm.618-15L15 2H9L7.382 4H3v2h18V4z"></path></svg>
+                    </a>
+                </div>
+                <div class="producto-imagen">
+                    <img src="{{ producto.foto}}" alt="Imagen del producto"/>
+                </div>
+                <div class="producto-data">
+                    <h1>{{ producto.nombre }}</h1>
+                    <h2>S/{{ producto.precio }}</h2>
+                    <h3>{{ producto.descripcion }}</h3>
+                    <p>Stock: {{ producto.stock }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <p colspan="6">No se encontraron productos.</p>
+        {% endfor %}
+    </div>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
